@@ -16,14 +16,54 @@ function App() {
     <Router>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
-        <PrivateRoute path="/dashboard" element={<DashboardPage />} />
-        <PrivateRoute path="/users" element={<UserManagementPage />} roleRequired="Admin" />
-        <PrivateRoute path="/products" element={<ProductManagementPage />} roleRequired="Vendor" />
-        <PrivateRoute path="/customer-orders" element={<CustomerOrderManagementPage />} roleRequired="CSR" />
-        <PrivateRoute path="/order-management" element={<OrderManagementPage />} roleRequired="Vendor" />
-        <PrivateRoute path="/inventory" element={<InventoryManagementPage />} roleRequired="Vendor" />
-        <PrivateRoute path="/vendors" element={<VendorManagementPage />} roleRequired="Admin" />
-        <PrivateRoute path="/vendors/:vendorId/comments" element={<CustomerCommentForm />} roleRequired="Customer" />
+        
+        <Route path="/dashboard" element={
+          <PrivateRoute roleRequired="Admin">
+            <DashboardPage />
+          </PrivateRoute>
+        } />
+
+        <Route path="/users" element={
+          <PrivateRoute roleRequired="Admin">
+            <UserManagementPage />
+          </PrivateRoute>
+        } />
+
+        <Route path="/products" element={
+          <PrivateRoute roleRequired="Vendor">
+            <ProductManagementPage />
+          </PrivateRoute>
+        } />
+
+        <Route path="/customer-orders" element={
+          <PrivateRoute roleRequired="CSR">
+            <CustomerOrderManagementPage />
+          </PrivateRoute>
+        } />
+
+        <Route path="/order-management" element={
+          <PrivateRoute roleRequired="Vendor">
+            <OrderManagementPage />
+          </PrivateRoute>
+        } />
+
+        <Route path="/inventory" element={
+          <PrivateRoute roleRequired="Vendor">
+            <InventoryManagementPage />
+          </PrivateRoute>
+        } />
+
+        <Route path="/vendors" element={
+          <PrivateRoute roleRequired="Admin">
+            <VendorManagementPage />
+          </PrivateRoute>
+        } />
+
+        <Route path="/vendors/:vendorId/comments" element={
+          <PrivateRoute roleRequired="Customer">
+            <CustomerCommentForm />
+          </PrivateRoute>
+        } />
       </Routes>
     </Router>
   );
