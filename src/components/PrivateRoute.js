@@ -1,24 +1,19 @@
 import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Navigate } from 'react-router-dom';
 
-const PrivateRoute = ({ component: Component, roleRequired, ...rest }) => (
-  <Route
-    {...rest}
-    render={(props) => {
-      const token = localStorage.getItem('token');
-      const userRole = localStorage.getItem('role');
-      
-      if (!token) {
-        return <Redirect to="/login" />;
-      }
-      
-      if (roleRequired && userRole !== roleRequired) {
-        return <Redirect to="/dashboard" />;
-      }
+const PrivateRoute = ({ element: Component, roleRequired, ...rest }) => {
+  const token = localStorage.getItem('token');
+  const userRole = localStorage.getItem('role');
 
-      return <Component {...props} />;
-    }}
-  />
-);
+  if (!token) {
+    return <Navigate to="/login" />;
+  }
+
+  if (roleRequired && userRole !== roleRequired) {
+    return <Navigate to="/dashboard" />;
+  }
+
+  return <Component {...rest} />;
+};
 
 export default PrivateRoute;
