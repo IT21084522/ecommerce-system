@@ -10,6 +10,7 @@ const LoginPage = () => {
     try {
       const response = await axios.post('http://your-api-url.com/api/login', { email, password });
       localStorage.setItem('token', response.data.token);
+      localStorage.setItem('role', response.data.role); // Store the user role
       window.location.href = '/dashboard'; // Redirect to dashboard after login
     } catch (error) {
       alert('Invalid login credentials');
