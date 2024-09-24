@@ -3,7 +3,10 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
 import UserManagementPage from './pages/UserManagementPage';
-import ProductManagementPage from './pages/ProductManagementPage';
+import ProductManagementDashboard from './pages/ProductManagementDashboard'; // New Dashboard
+import AddProductPage from './pages/AddProductPage'; // Add Product Page
+import ViewProductsPage from './pages/ViewProductsPage'; // View Products Page
+import ManageCategoriesPage from './pages/ManageCategoriesPage'; // Manage Categories Page
 import VendorManagementPage from './pages/VendorManagementPage';
 import CustomerCommentForm from './pages/CustomerCommentForm';
 import PrivateRoute from './components/PrivateRoute';
@@ -31,7 +34,25 @@ function App() {
 
         <Route path="/products" element={
           <PrivateRoute roleRequired="Vendor">
-            <ProductManagementPage />
+            <ProductManagementDashboard />
+          </PrivateRoute>
+        } />
+
+        <Route path="/products/add" element={
+          <PrivateRoute roleRequired="Vendor">
+            <AddProductPage />
+          </PrivateRoute>
+        } />
+
+        <Route path="/products/view" element={
+          <PrivateRoute roleRequired="Vendor">
+            <ViewProductsPage />
+          </PrivateRoute>
+        } />
+
+        <Route path="/products/categories" element={
+          <PrivateRoute roleRequired="Vendor">
+            <ManageCategoriesPage />
           </PrivateRoute>
         } />
 
