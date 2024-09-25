@@ -17,7 +17,7 @@ import OrderManagementPage from './pages/OrderManagementPage';
 function App() {
   return (
     <Router>
-      <Routes>
+      {/* <Routes>
         <Route path="/login" element={<LoginPage />} />
         
         <Route path="/dashboard" element={
@@ -85,6 +85,20 @@ function App() {
             <CustomerCommentForm />
           </PrivateRoute>
         } />
+      </Routes> */}
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/users" element={<UserManagementPage />} />
+        <Route path="/products" element={<ProductManagementDashboard />} />
+        <Route path="/products/add" element={<AddProductPage />} />
+        <Route path="/products/view" element={<ViewProductsPage />} />
+        <Route path="/products/categories" element={<ManageCategoriesPage />} />
+        <Route path="/customer-orders" element={<CustomerOrderManagementPage />} />
+        <Route path="/order-management" element={<OrderManagementPage />} />
+        <Route path="/inventory" element={<InventoryManagementPage />} />
+        <Route path="/vendors" element={<VendorManagementPage />} />
+        <Route path="/vendors/:vendorId/comments" element={<CustomerCommentForm />} />
       </Routes>
     </Router>
   );

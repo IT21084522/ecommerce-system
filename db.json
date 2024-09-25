@@ -1,0 +1,90 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "username": "admin",
+      "password": "admin123",
+      "role": "Admin"
+    },
+    {
+      "id": "2",
+      "username": "csr",
+      "password": "csr123",
+      "role": "CSR"
+    },
+    {
+      "id": "3",
+      "username": "vendor",
+      "password": "vendor123",
+      "role": "Vendor"
+    },
+    {
+      "id": "6b9a",
+      "name": "test",
+      "email": "test@gmail.com",
+      "role": "Admin"
+    }
+  ],
+  "products": [
+    {
+      "id": "1",
+      "name": "Product A",
+      "price": 100,
+      "stock": 50,
+      "category": "Category 1",
+      "active": true
+    },
+    {
+      "id": "2",
+      "name": "Product B",
+      "price": 200,
+      "stock": 30,
+      "category": "Category 2",
+      "active": true
+    }
+  ],
+  "orders": [
+    {
+      "id": "1",
+      "customerName": "John Doe",
+      "productId": 1,
+      "vendorId": 1,
+      "quantity": 2,
+      "status": "Processing"
+    },
+    {
+      "id": "2",
+      "customerName": "Jane Smith",
+      "productId": 2,
+      "vendorId": 2,
+      "quantity": 1,
+      "status": "Partially Delivered"
+    }
+  ],
+  "vendors": [
+    {
+      "id": "1",
+      "name": "Vendor A",
+      "email": "vendorA@example.com"
+    },
+    {
+      "id": "2",
+      "name": "Vendor B",
+      "email": "vendorB@example.com"
+    }
+  ],
+  "vendorComments": [
+    {
+      "vendorId": 1,
+      "rating": 5,
+      "comment": "Excellent service!",
+      "id": "d521"
+    },
+    {
+      "vendorId": 2,
+      "rating": 3,
+      "comment": "Average experience.",
+      "id": "4c41"
+    }
+  ]
+}
