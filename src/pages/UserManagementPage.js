@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Container, Row, Col, Table, Button, Form, Modal } from 'react-bootstrap';
+import { FaUserEdit, FaUserPlus, FaTrash, FaUsers, FaBox, FaShoppingCart, FaWarehouse, FaSignOutAlt } from 'react-icons/fa';
+import './UserManagementPage.css'; // For custom CSS animations and styles
 
 const UserManagementPage = () => {
   const [users, setUsers] = useState([]);
@@ -8,7 +11,8 @@ const UserManagementPage = () => {
   const [role, setRole] = useState('Admin'); // Default role
   const [editingUser, setEditingUser] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
-
+  const [showModal, setShowModal] = useState(false);
+  
   // Fetch existing users and check if the current user is an Admin
   useEffect(() => {
     const fetchUsers = async () => {
@@ -25,18 +29,25 @@ const UserManagementPage = () => {
     fetchUsers();
   }, []);
 
-  // Handle user creation
-  const handleCreateUser = async (e) => {
+  // Handle user creation or update
+  const handleSubmitUser = async (e) => {
     e.preventDefault();
     try {
       const newUser = { name, email, role };
-      const response = await axios.post('http://your-api-url.com/api/users', newUser);
-      setUsers([...users, response.data]);
+      if (editingUser) {
+        const response = await axios.put(`http://your-api-url.com/api/users/${editingUser.id}`, newUser);
+        setUsers(users.map((user) => (user.id === editingUser.id ? response.data : user)));
+        setEditingUser(null);
+      } else {
+        const response = await axios.post('http://your-api-url.com/api/users', newUser);
+        setUsers([...users, response.data]);
+      }
       setName('');
       setEmail('');
       setRole('Admin');
+      setShowModal(false);
     } catch (error) {
-      alert('Failed to create user');
+      alert('Failed to submit user');
     }
   };
 
@@ -50,87 +61,140 @@ const UserManagementPage = () => {
     }
   };
 
-  // Handle user update
-  const handleUpdateUser = async (e) => {
-    e.preventDefault();
-    try {
-      const updatedUser = { name, email, role };
-      const response = await axios.put(`http://your-api-url.com/api/users/${editingUser.id}`, updatedUser);
-      setUsers(users.map((user) => (user.id === editingUser.id ? response.data : user)));
-      setEditingUser(null);
-      setName('');
-      setEmail('');
-      setRole('Admin');
-    } catch (error) {
-      alert('Failed to update user');
-    }
-  };
-
   // Handle editing a user
   const handleEditUser = (user) => {
     setEditingUser(user);
     setName(user.name);
     setEmail(user.email);
     setRole(user.role);
+    setShowModal(true); // Open modal for editing
+  };
+
+  // Open modal for creating a new user
+  const handleCreateUser = () => {
+    setEditingUser(null);
+    setName('');
+    setEmail('');
+    setRole('Admin');
+    setShowModal(true);
   };
 
   return (
-    <div>
-      <h1>User Management</h1>
+    <div className="usermanagement-container">
+      {/* Header */}
+      <header className="dashboard-header d-flex justify-content-between align-items-center">
+        <h2>User Management</h2>
+        <Button variant="outline-danger" onClick={() => { localStorage.clear(); window.location.href = '/login'; }}>
+          <FaSignOutAlt /> Logout
+        </Button>
+      </header>
 
-      {isAdmin ? (
-        <>
-          <form onSubmit={editingUser ? handleUpdateUser : handleCreateUser}>
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Name"
-              required
-            />
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Email"
-              required
-            />
-            <select value={role} onChange={(e) => setRole(e.target.value)}>
-              <option value="Admin">Admin</option>
-              <option value="Vendor">Vendor</option>
-              <option value="CSR">CSR</option>
-            </select>
-            <button type="submit">{editingUser ? 'Update User' : 'Create User'}</button>
-          </form>
+      {/* Sidebar Navigation */}
+      <div className="sidebar">
+        <nav>
+          <ul>
+            <li><a href="/users"><FaUsers className="sidebar-icon" /> <span>User Management</span></a></li>
+            <li><a href="/products"><FaBox className="sidebar-icon" /> <span>Product Management</span></a></li>
+            <li><a href="/order-management"><FaShoppingCart className="sidebar-icon" /> <span>Order Management</span></a></li>
+            <li><a href="/inventory"><FaWarehouse className="sidebar-icon" /> <span>Inventory Management</span></a></li>
+          </ul>
+        </nav>
+      </div>
 
-          <h2>Existing Users</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Role</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {users.map((user) => (
-                <tr key={user.id}>
-                  <td>{user.name}</td>
-                  <td>{user.email}</td>
-                  <td>{user.role}</td>
-                  <td>
-                    <button onClick={() => handleEditUser(user)}>Edit</button>
-                    <button onClick={() => handleDeleteUser(user.id)}>Delete</button>
-                  </td>
+      {/* Main Content */}
+      <Container fluid className="dashboard-main">
+        {isAdmin ? (
+          <>
+            <Button variant="primary" className="mb-4" onClick={handleCreateUser}>
+              <FaUserPlus /> Create New User
+            </Button>
+
+            <Table striped bordered hover className="users-table">
+              <thead className="thead-dark">
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Role</th>
+                  <th>Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </>
-      ) : (
-        <p>You do not have permission to access this page.</p>
-      )}
+              </thead>
+              <tbody>
+                {users.map((user) => (
+                  <tr key={user.id}>
+                    <td>{user.name}</td>
+                    <td>{user.email}</td>
+                    <td>{user.role}</td>
+                    <td>
+                      <Button variant="warning" size="sm" onClick={() => handleEditUser(user)}>
+                        <FaUserEdit /> Edit
+                      </Button>{' '}
+                      <Button variant="danger" size="sm" onClick={() => handleDeleteUser(user.id)}>
+                        <FaTrash /> Delete
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </>
+        ) : (
+          <p>You do not have permission to access this page.</p>
+        )}
+      </Container>
+
+      {/* Footer */}
+      <footer className="dashboard-footer">
+        <p>&copy; 2024 E-Commerce Admin Dashboard. All rights reserved.</p>
+      </footer>
+
+      {/* Modal for Creating/Editing User */}
+      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>{editingUser ? 'Edit User' : 'Create New User'}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={handleSubmitUser}>
+            <Form.Group controlId="formName" className="mb-3">
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Enter name"
+                required
+              />
+            </Form.Group>
+
+            <Form.Group controlId="formEmail" className="mb-3">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter email"
+                required
+              />
+            </Form.Group>
+
+            <Form.Group controlId="formRole" className="mb-3">
+              <Form.Label>Role</Form.Label>
+              <Form.Control
+                as="select"
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+              >
+                <option value="Admin">Admin</option>
+                <option value="Vendor">Vendor</option>
+                <option value="CSR">CSR</option>
+              </Form.Control>
+            </Form.Group>
+
+            <Button variant="primary" type="submit" className="w-100">
+              {editingUser ? 'Update User' : 'Create User'}
+            </Button>
+          </Form>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 };
