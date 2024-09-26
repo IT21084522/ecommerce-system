@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Container, Row, Col, Table, Button, Form, Modal } from 'react-bootstrap';
 import { FaUserEdit, FaUserPlus, FaTrash, FaUsers, FaBox, FaShoppingCart, FaWarehouse, FaSignOutAlt } from 'react-icons/fa';
-import './UserManagementPage.css'; // For custom CSS animations and styles
+import './css/UserManagementPage.css'; // For custom CSS animations and styles
 
 const UserManagementPage = () => {
   const [users, setUsers] = useState([]);
@@ -10,7 +10,7 @@ const UserManagementPage = () => {
   const [email, setEmail] = useState('');
   const [role, setRole] = useState('Admin'); // Default role
   const [editingUser, setEditingUser] = useState(null);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(true);
   const [showModal, setShowModal] = useState(false);
   
   // Fetch existing users and check if the current user is an Admin
@@ -97,6 +97,8 @@ const UserManagementPage = () => {
             <li><a href="/products"><FaBox className="sidebar-icon" /> <span>Product Management</span></a></li>
             <li><a href="/order-management"><FaShoppingCart className="sidebar-icon" /> <span>Order Management</span></a></li>
             <li><a href="/inventory"><FaWarehouse className="sidebar-icon" /> <span>Inventory Management</span></a></li>
+            <li><a href="/customer-orders"><FaShoppingCart className="sidebar-icon" /> <span>Customer Order Management</span></a></li>
+            <li><a href="/vendors"><FaUsers className="sidebar-icon" /> <span>Vendor Management</span></a></li>
           </ul>
         </nav>
       </div>

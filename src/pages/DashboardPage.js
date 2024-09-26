@@ -1,8 +1,8 @@
 import React from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
-import { FaUsers, FaBox, FaShoppingCart, FaWarehouse, FaSignOutAlt } from 'react-icons/fa';
+import { FaUsers, FaBox, FaShoppingCart, FaWarehouse, FaClipboardList, FaSignOutAlt } from 'react-icons/fa'; // Added FaClipboardList for Customer Order Management icon
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './DashboardPage.css'; // For custom CSS animations and styles
+import './css/DashboardPage.css'; // For custom CSS animations and styles
 
 const DashboardPage = () => {
   const userName = localStorage.getItem('userName') || 'Admin'; // Assume userName is stored in localStorage
@@ -31,6 +31,8 @@ const DashboardPage = () => {
             <li><a href="/products"><FaBox className="sidebar-icon" /> <span>Product Management</span></a></li>
             <li><a href="/order-management"><FaShoppingCart className="sidebar-icon" /> <span>Order Management</span></a></li>
             <li><a href="/inventory"><FaWarehouse className="sidebar-icon" /> <span>Inventory Management</span></a></li>
+            <li><a href="/customer-orders"><FaClipboardList className="sidebar-icon" /> <span>Customer Order Management</span></a></li>
+            <li><a href="/vendors"><FaUsers className="sidebar-icon" /> <span>Vendor Management</span></a></li>
           </ul>
         </nav>
       </div>
@@ -71,6 +73,15 @@ const DashboardPage = () => {
                 <FaWarehouse className="dashboard-icon" />
                 <Card.Title>Inventory Management</Card.Title>
                 <Card.Text>Monitor stock and generate low-stock alerts.</Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col md={6} lg={4} className="mb-4">
+            <Card className="dashboard-card" onClick={() => window.location.href = '/customer-orders'}>
+              <Card.Body>
+                <FaClipboardList className="dashboard-icon" />
+                <Card.Title>Customer Order Management</Card.Title>
+                <Card.Text>Manage customer order statuses and updates.</Card.Text>
               </Card.Body>
             </Card>
           </Col>

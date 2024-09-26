@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Table, Button } from 'react-bootstrap';
+import { FaUsers, FaBox, FaShoppingCart, FaWarehouse, FaSignOutAlt } from 'react-icons/fa';
+import './css/InventoryManagementPage.css'; // Assume you have a CSS file for styling
 
 const InventoryManagementPage = () => {
   const [products, setProducts] = useState([]);
@@ -54,47 +57,73 @@ const InventoryManagementPage = () => {
   };
 
   return (
-    <div>
-      <h1>Inventory Management</h1>
+    <div className="inventorymanagement-container">
+      {/* Header */}
+      <header className="dashboard-header d-flex justify-content-between align-items-center">
+        <h2>Inventory Management</h2>
+        <Button variant="outline-danger" onClick={() => { localStorage.clear(); window.location.href = '/login'; }}>
+          <FaSignOutAlt /> Logout
+        </Button>
+      </header>
 
-      <h2>Product Inventory</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Stock</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {products.map((product) => (
-            <tr key={product.id}>
-              <td>{product.name}</td>
-              <td>{product.price}</td>
-              <td>{product.stock}</td>
-              <td>{isLowStock(product) ? 'Low Stock' : 'In Stock'}</td>
-              <td>
-                <button
-                  onClick={() => {
+      {/* Sidebar Navigation */}
+      <div className="sidebar">
+        <nav>
+          <ul>
+            <li><a href="/users"><FaUsers className="sidebar-icon" /> <span>User Management</span></a></li>
+            <li><a href="/products"><FaBox className="sidebar-icon" /> <span>Product Management</span></a></li>
+            <li><a href="/order-management"><FaShoppingCart className="sidebar-icon" /> <span>Order Management</span></a></li>
+            <li><a href="/inventory"><FaWarehouse className="sidebar-icon" /> <span>Inventory Management</span></a></li>
+            <li><a href="/customer-orders"><FaShoppingCart className="sidebar-icon" /> <span>Customer Order Management</span></a></li>
+            <li><a href="/vendors"><FaUsers className="sidebar-icon" /> <span>Vendor Management</span></a></li>
+          </ul>
+        </nav>
+      </div>
+
+      {/* Main Content */}
+      <div className="dashboard-main">
+        <h2 className="mb-4 text-center">Product Inventory</h2>
+        <Table striped bordered hover className="table-responsive">
+          <thead className="thead-dark">
+            <tr>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Stock</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {products.map((product) => (
+              <tr key={product.id}>
+                <td>{product.name}</td>
+                <td>{product.price}</td>
+                <td>{product.stock}</td>
+                <td>{isLowStock(product) ? 'Low Stock' : 'In Stock'}</td>
+                <td>
+                  <Button variant="warning" size="sm" onClick={() => {
                     if (isLowStock(product)) {
                       sendLowStockAlert(product);
                     } else {
                       alert('Stock is sufficient.');
                     }
-                  }}
-                >
-                  Send Low Stock Alert
-                </button>
-                <button onClick={() => preventStockRemovalForPendingOrders(product.id)}>
-                  Check Pending Orders
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                  }}>
+                    Send Low Stock Alert
+                  </Button>{' '}
+                  <Button variant="info" size="sm" onClick={() => preventStockRemovalForPendingOrders(product.id)}>
+                    Check Pending Orders
+                  </Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </div>
+
+      {/* Footer */}
+      <footer className="dashboard-footer">
+        <p>&copy; 2024 E-Commerce Admin Dashboard. All rights reserved.</p>
+      </footer>
     </div>
   );
 };

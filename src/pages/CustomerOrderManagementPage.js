@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Table, Button, Modal } from 'react-bootstrap';
 import { FaCheckCircle, FaTimesCircle, FaTruck, FaTrash, FaUsers, FaBox, FaShoppingCart, FaWarehouse, FaSignOutAlt } from 'react-icons/fa';
-import './CustomerOrderManagementPage.css';
+import './css/CustomerOrderManagementPage.css';
 
 const CustomerOrderManagementPage = () => {
   const [orders, setOrders] = useState([]);
@@ -113,6 +113,8 @@ const CustomerOrderManagementPage = () => {
             <li><a href="/products"><FaBox className="sidebar-icon" /> <span>Product Management</span></a></li>
             <li><a href="/order-management"><FaShoppingCart className="sidebar-icon" /> <span>Order Management</span></a></li>
             <li><a href="/inventory"><FaWarehouse className="sidebar-icon" /> <span>Inventory Management</span></a></li>
+            <li><a href="/customer-orders"><FaShoppingCart className="sidebar-icon" /> <span>Customer Order Management</span></a></li>
+            <li><a href="/vendors"><FaUsers className="sidebar-icon" /> <span>Vendor Management</span></a></li>
           </ul>
         </nav>
       </div>

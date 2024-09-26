@@ -1,0 +1,93 @@
+/* Main dashboard container */
+.ordermanagement-container {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  /* Sidebar */
+  .sidebar {
+    background-color: #343a40;
+    padding: 20px;
+    width: 220px;
+    color: white;
+    height: 100vh;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    z-index: 1000;
+  }
+  
+  .sidebar nav ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .sidebar nav ul li {
+    margin: 20px 0;
+  }
+  
+  .sidebar nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .sidebar nav ul li a:hover {
+    color: #ffc107;
+    transition: color 0.3s;
+  }
+  
+  .sidebar-icon {
+    margin-right: 10px; /* Space between icon and text */
+  }
+  
+  /* Dashboard Header */
+  .dashboard-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1100;
+    background-color: #f8f9fa;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .dashboard-header h2 {
+    font-size: 24px;
+    margin: 0;
+  }
+  
+  .dashboard-header button {
+    font-size: 16px;
+  }
+  
+  /* Main Dashboard */
+  .dashboard-main {
+    margin-left: 220px;
+    margin-top: 80px;
+    padding: 40px;
+    flex-grow: 1;
+    background-color: #f0f2f5;
+    overflow-y: auto;
+  }
+  
+  /* Footer */
+  .dashboard-footer {
+    position: fixed;
+    bottom: 0;
+    left: 220px;
+    width: calc(100% - 220px);
+    background-color: #f8f9fa;
+    padding: 10px;
+    text-align: center;
+    font-size: 14px;
+    color: #6c757d;
+  }
+  
