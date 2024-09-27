@@ -14,12 +14,17 @@ import InventoryManagementPage from './pages/InventoryManagementPage';
 import CustomerOrderManagementPage from './pages/CustomerOrderManagementPage';
 import OrderManagementPage from './pages/OrderManagementPage';
 
+// New Customer Management Components
+import CustomerManagementDashboard from './pages/CustomerManagementDashboard';
+import CustomerAccountActivationRequests from './pages/CustomerAccountActivationRequests';
+import DeactivatedAccountReactivation from './pages/DeactivatedAccountReactivation';
+
 function App() {
   return (
     <Router>
       {/* <Routes>
         <Route path="/login" element={<LoginPage />} />
-        
+
         <Route path="/dashboard" element={
           <PrivateRoute roleRequired="Admin">
             <DashboardPage />
@@ -85,9 +90,28 @@ function App() {
             <CustomerCommentForm />
           </PrivateRoute>
         } />
+
+        <Route path="/customer-management" element={
+          <PrivateRoute roleRequired="CSR">
+            <CustomerManagementDashboard />
+          </PrivateRoute>
+        } />
+
+        <Route path="/customer-account-activation" element={
+          <PrivateRoute roleRequired="CSR">
+            <CustomerAccountActivationRequests />
+          </PrivateRoute>
+        } />
+
+        <Route path="/deactivated-account-reactivation" element={
+          <PrivateRoute roleRequired="CSR">
+            <DeactivatedAccountReactivation />
+          </PrivateRoute>
+        } />
       </Routes> */}
       <Routes>
         <Route path="/login" element={<LoginPage />} />
+
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/users" element={<UserManagementPage />} />
         <Route path="/products" element={<ProductManagementDashboard />} />
@@ -99,6 +123,9 @@ function App() {
         <Route path="/inventory" element={<InventoryManagementPage />} />
         <Route path="/vendors" element={<VendorManagementPage />} />
         <Route path="/vendors/:vendorId/comments" element={<CustomerCommentForm />} />
+        <Route path="/customer-management" element={<CustomerManagementDashboard />} />
+        <Route path="/customer-account-activation" element={<CustomerAccountActivationRequests />} />
+        <Route path="/deactivated-account-reactivation" element={<DeactivatedAccountReactivation />} />
       </Routes>
     </Router>
   );
